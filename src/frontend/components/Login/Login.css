@@ -5,7 +5,20 @@ body {
     padding: 0;
     background-color: #f4f4f4;
   }
+
+  .create{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
   
+  .create_account{
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    justify-content: center;
+  }
+
   /* Login container */
   .login-container {
     max-width: 400px;

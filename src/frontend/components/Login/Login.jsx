@@ -92,6 +92,11 @@ const Login = () => {
         
       </form>
         <GoogleSignIn />
+        <div className='create'>
+          <p className='create_account'><a href='/signup'>Need an Account</a></p>
+          <p className='create_account'><a href='/forgot-password'>Forgot Password</a></p>
+        </div>
+       
     </div>
   );
 };

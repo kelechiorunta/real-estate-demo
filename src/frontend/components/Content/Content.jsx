@@ -20,6 +20,7 @@ export default function Content() {
                 // The server responded with a status other than 2xx
                 console.error('Error status:', err.response.status);
                 alert(`Error message: ${err.response.data.error}`, err.response.data.error);
+                localStorage.removeItem('UserData');
                 navigate('/login');
             } else if (err.request) {
                 // The request was made, but no response was received
