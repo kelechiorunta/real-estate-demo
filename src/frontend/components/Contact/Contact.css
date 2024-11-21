@@ -1,0 +1,111 @@
+/* Contact Page Styles */
+.contact-page {
+    padding: 50px 20px;
+    background-color: #f9f9f9;
+  }
+  
+  .contact-header {
+    text-align: center;
+    margin-bottom: 30px;
+  }
+  
+  .contact-header h1 {
+    font-size: 36px;
+    color: #333;
+  }
+  
+  .contact-header p {
+    font-size: 18px;
+    color: #555;
+    margin-top: 10px;
+  }
+  
+  .contact-info {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    margin-bottom: 40px;
+  }
+  
+  .contact-item {
+    text-align: center;
+    background: #fff;
+    padding: 20px;
+    margin: 10px;
+    max-width: 300px;
+    flex: 1;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .contact-item svg {
+    color: #007BFF;
+    margin-bottom: 10px;
+  }
+  
+  .contact-item h3 {
+    color: #333;
+    margin-bottom: 10px;
+  }
+  
+  .contact-item p {
+    color: #555;
+  }
+  
+  .contact-form {
+    background: #fff;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .contact-form h2 {
+    margin-bottom: 20px;
+    font-size: 24px;
+    color: #333;
+  }
+  
+  .form-group {
+    margin-bottom: 20px;
+  }
+  
+  .form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: #555;
+  }
+  
+  .form-group input,
+  .form-group textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  button {
+    padding: 10px 20px;
+    background-color: #007BFF;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  button:hover {
+    background-color: #0056b3;
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .contact-info {
+      flex-direction: column;
+      align-items: center;
+    }
+  
+    .contact-item {
+      max-width: 90%;
+    }
+  }
+  

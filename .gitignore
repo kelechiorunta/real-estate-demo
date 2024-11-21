@@ -1,0 +1,7 @@
+/node_modules
+/src/dist
+.env
+.env.local
+.vscode
+webpack.config.js
+/src/utils
