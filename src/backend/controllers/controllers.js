@@ -115,7 +115,7 @@ try{
         const token = jwt.sign({selectedUser}, process.env.JWT_SECRET, { expiresIn: 60 });
         res.cookie('kus', token, {maxAge: 60000, httpOnly: true, SameSite: 'None', Secure: true})
         // req.user = selectedUser;
-        return res.status(200).json({message: "User successfully logged in!"})
+        return res.status(200).json({message: "User successfully logged in!", user: selectedUser})
     }else{
         return res.status(400).json({message: "No user found"})
     }
