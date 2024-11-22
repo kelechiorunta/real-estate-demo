@@ -6,7 +6,7 @@ const route = express.Router();
 
 //Protect or authenticate all get routes in this router
 //by authenticating with the checkToken function.
-route.use((req, res, next)=>{
+route.get('*', checkToken, (req, res, next)=>{
     console.log(req.user);
     next();
 })
@@ -14,7 +14,7 @@ route.use((req, res, next)=>{
 //Sampling purpose: the getgreetings controller function
 //can only be authenticated by the checkToken middleware 
 //function passed to all get routes mounted on this router.
-route.get('/', checkToken, getGreetings); 
+route.get('/', getGreetings); 
 route.get('/authenticate', validToken); 
 route.get('/logout', logout); 
 route.post('/login', login); 

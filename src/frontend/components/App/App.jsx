@@ -9,6 +9,9 @@ import About from "../About/About";
 import Contact from "../Contact/Contact";
 import ResetPassword from "../ResetPassword/ResetPassword";
 import ForgotPassword from "../ForgotPassword/ForgotPassword";
+import Profile from "../Profile/Profile";
+import Settings from "../Settings/Settings";
+import Home from "../Home/Home";
 
 const App = () => {
     const location = useLocation();
@@ -20,11 +23,14 @@ const App = () => {
                 <Route path='/login' element={<Login />} />
                 <Route path={`/reset-password/:token`} element={<ResetPassword />} />
                 <Route path="/forgot-password" element={<ForgotPassword />} />
-                <Route path="*" element={<div>Page not found</div>} />
+                {/* <Route path="*" element={<div>Page not found</div>} /> */}
                 <Route element={<ProtectedRoute />}>
                     <Route path="/" element={<Content />} />
                     <Route path="/about" element={<About />} />
                     <Route path="/contact" element={<Contact />} />
+                    <Route path="/home" element={<Home />} />
+                    <Route path="/profile" element={<Profile />} />
+                    <Route path="/settings" element={<Settings />} />
                 </Route>
                 {/* <Route path="/" element={<Content />} /> */}
            </Routes>
