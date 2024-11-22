@@ -2,9 +2,12 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Lock, Key } from 'lucide-react'; // Importing Lucide icons
 import './ResetPassword.css'; // Import the CSS file
+import { useParams } from 'react-router-dom';
+import axios from 'axios';
 
 const ResetPassword = () => {
   const navigate = useNavigate();
+  const { token } = useParams();
 
   const [formData, setFormData] = useState({
     newPassword: '',
@@ -45,10 +48,13 @@ const ResetPassword = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (validate()) {
+        console.log(token)
       try {
         // Replace with your API call
-        console.log('Password reset successfully', formData);
-        alert('Password reset successful!');
+        const data = { token, password: formData.confirmPassword }
+        const res = await axios.post('/api/reset-password', data, {withCredentials:true})
+        console.log('Password reset successfully', data);
+        alert('Password reset successful!', res?.data?.message);
         navigate('/login'); // Redirect to login page
       } catch (err) {
         console.error(err.message || 'Password reset failed');

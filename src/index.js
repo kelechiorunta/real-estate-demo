@@ -73,6 +73,7 @@ app.use((req, res, next) => {
             }else{
                 console.log("Cookie Kus expired")
             }
+            console.log(req.user)
             next();
         });
     } catch (err) {
@@ -88,9 +89,11 @@ app.use('/api/auth', oauth);
 app.get('*', async (req, res, next) => {
     try {
         console.log(`The current time is ${req.time}`);
-        res.render('index', {
-            content: `Loading...${new Date()}`
-        });
+        const indexfile = path.resolve(__dirname, 'dist/index.html')
+        res.sendFile(indexfile)
+        // res.render('index', {
+        //     content: `Loading...${new Date()}`
+        // });
     } catch (err) {
         next(new ServerError("Failed to render index", err.message));
     }

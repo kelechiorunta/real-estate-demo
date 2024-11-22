@@ -6,6 +6,12 @@ body {
     background-color: #f8f9fa;
     box-sizing: border-box;
   }
+
+  .login_link{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
   
   /* Container styling */
   .signup-container {
