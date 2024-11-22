@@ -8,12 +8,10 @@ function checkToken(req, res, next){
     if (!secretKey){
         return res.status(401).json({error: "No secret key"})
     }
-    // const token = req.cookies.kus;
 
     // Check if token exists
     if (!req.cookies.kus) {
          return res.status(401).json({ error: 'Unauthorized: No token provided. Please sign up or log in..' });
-    //    return res.redirect('/signup');
     }
     
     try {
@@ -22,8 +20,25 @@ function checkToken(req, res, next){
             if (err) {
                 return res.status(403).json({ error: 'Invalid or Expired Token' }); // If token is invalid or expired
               }
-            req.user = user?.id || user?.selectedUser || user?.registeredUser ;//await User.findOne({email: user?.id?.email});
-            console.log(req.user);
+            const activeUser = user?.id || user?.selectedUser || user?.registeredUser ;//await User.findOne({email: user?.id?.email});
+            let isStored
+            //Verify if user is in database
+            const storedActiveUser = await User.findOne({email: activeUser.email});
+            if (storedActiveUser) {
+                req.user = storedActiveUser;
+                if (!req.user.picture || req.user.picture===''){
+                    req.user.picture = activeUser?.picture;
+                    await req.user.save();
+                }
+                isStored = true
+                
+            } else {
+                req.user = activeUser
+                req.user.picture = activeUser?.picture
+                isStored = false;
+                await req.user.save(); //Save to database if non-existent
+            }
+            console.log(req.user, isStored);
             next();
         });
         // console.log(decoded);

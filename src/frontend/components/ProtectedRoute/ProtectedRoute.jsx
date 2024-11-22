@@ -12,6 +12,8 @@ const ProtectedRoute = () => {
             try {
                 const res = await axios.get('/api/authenticate', { withCredentials: true });
                 console.log('Token valid:', res.data.isValid);
+                console.log(res.data.user)
+                localStorage.setItem('UserData', JSON.stringify(res.data.user));
                 setIsAuthenticated(res.data.isValid); // Update authentication state
             } catch (err) {
                 console.error('Token verification error:', err.message);

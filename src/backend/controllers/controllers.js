@@ -87,11 +87,12 @@ async function registerUser(req, res) {
 
 //Controller to check the presence of the valid current user cookie and token
 function validToken(req, res){
+    console.log(req.user, "Valid Token")
     try{
         if (!req.cookies.kus){
             return res.status(400).json({ isValid: false, error: 'Token Expired. Please Log in.'})
         }
-        return res.status(200).json({isValid: true, success: 'Token valid. Please continue'})
+        return res.status(200).json({isValid: true, user: req?.user, success: 'Token valid. Please continue'})
     }
     catch(err){
         return res.status(500).json({error: 'Unable to validate token'})
