@@ -2,7 +2,7 @@ import React from "react";
 import Content from "../Content/Content";
 import Signup from "../Signup/SignUp";
 import './App.css';
-import { Routes, Route, useLocation } from "react-router-dom";
+import { Routes, Route, useLocation, useParams } from "react-router-dom";
 import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
 import Login from "../Login/Login";
 import About from "../About/About";
@@ -12,16 +12,18 @@ import ForgotPassword from "../ForgotPassword/ForgotPassword";
 
 const App = () => {
     const location = useLocation();
+    const token = useParams();
     return (
         <div className='App'>
-           <Routes location={location} key={location.pathname}>
+           <Routes>
                 <Route path='/signup' element={<Signup />} />
                 <Route path='/login' element={<Login />} />
-                <Route path="/reset-password" element={<ResetPassword />} />
+                <Route path={`/reset-password/:token`} element={<ResetPassword />} />
                 <Route path="/forgot-password" element={<ForgotPassword />} />
+                <Route path="*" element={<div>Page not found</div>} />
                 <Route element={<ProtectedRoute />}>
                     <Route path="/" element={<Content />} />
-                s    <Route path="/about" element={<About />} />
+                    <Route path="/about" element={<About />} />
                     <Route path="/contact" element={<Contact />} />
                 </Route>
                 {/* <Route path="/" element={<Content />} /> */}

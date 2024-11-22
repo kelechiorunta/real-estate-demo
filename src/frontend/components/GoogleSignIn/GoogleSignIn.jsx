@@ -2,11 +2,13 @@ import React from 'react';
 import { GoogleLogin } from '@react-oauth/google';
 import { useGoogleLogin } from '@react-oauth/google';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import './GoogleSignIn.css'
 
 export default function GoogleSignIn() {
   const navigate = useNavigate();
+  const location = useLocation();
+  const redirectPath = location.state?.from || location.state?.path || '/';
   const handleSuccess = async (credentialResponse) => {
     console.log(credentialResponse);
     try{
@@ -20,7 +22,7 @@ export default function GoogleSignIn() {
        )
        console.log(res?.data?.user)
        localStorage.setItem("UserData", JSON.stringify(res?.data?.user))
-       navigate('/', {state: res?.data?.user})
+       navigate(redirectPath, {state: res?.data?.user, replace: true})
     }
     catch (err) {
        console.log('Failed Login attempt: ', err?.response?.data?.error || err?.message)
@@ -43,14 +45,9 @@ export default function GoogleSignIn() {
     <button className='googleBtn'
 			onClick={googleLogin}
 		>
-			Sign in with Google
+       Sign in with Google 🚀
+			{/* Sign in with Google */}
 		</button>
 		</>
-    // <GoogleLogin
-    //   onSuccess={handleSuccess}
-    //   onError={handleError}
-    //   useOneTap
-    //   flow='auth-code'
-    // />
   );
 }

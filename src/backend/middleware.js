@@ -1,4 +1,5 @@
 const jwt = require('jsonwebtoken');
+const User = require('./models/User');
 
 function checkToken(req, res, next){
 
@@ -17,11 +18,12 @@ function checkToken(req, res, next){
     
     try {
         // Verify the token
-        jwt.verify(req.cookies.kus, process.env.JWT_SECRET, (err, decoded) => {
+        jwt.verify(req.cookies.kus, process.env.JWT_SECRET, async(err, user) => {
             if (err) {
                 return res.status(403).json({ error: 'Invalid or Expired Token' }); // If token is invalid or expired
               }
-            req.user = decoded;
+            req.user = user?.id || user?.selectedUser || user?.registeredUser ;//await User.findOne({email: user?.id?.email});
+            console.log(req.user);
             next();
         });
         // console.log(decoded);

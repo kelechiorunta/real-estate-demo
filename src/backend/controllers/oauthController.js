@@ -7,8 +7,8 @@ const signToken = (id) => {
     });
 };
 // Create and send Cookie ->
-const createSendToken = (user, statusCode, res) => {
-    const token = signToken(user.id);
+const createSendToken = (user, statusCode, req, res) => {
+    const token = signToken(user);
 
     // console.log(process.env.JWT_COOKIE_EXPIRES_IN);
     const cookieOptions = {
@@ -27,6 +27,8 @@ const createSendToken = (user, statusCode, res) => {
 
     res.cookie('kus', token, cookieOptions);
 
+    // req.user = user;
+    
     res.status(statusCode).json({
         message: 'success',
         token,
@@ -81,7 +83,7 @@ async function googleLogin(req, res) {
 
     // Step 3: Optionally, create a custom JWT or handle user data in your database
     // Example: Attach user info to a JWT and send it back to the client
-    createSendToken(userInfo, 200, res); // Replace this with your implementation
+    createSendToken(userInfo, 200, req, res); // Replace this with your implementation
 
   } catch (err) {
     console.error('Google login error:', err.response?.data || err.message);

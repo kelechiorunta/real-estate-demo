@@ -1,5 +1,5 @@
 const express = require('express');
-const { getGreetings, registerUser, validToken, login, logout } = require('../controllers/controllers')
+const { getGreetings, registerUser, validToken, login, logout, forgotPassword, resetPassword } = require('../controllers/controllers')
 const { checkToken } = require('../middleware')
 
 const route = express.Router();
@@ -18,6 +18,8 @@ route.get('/', checkToken, getGreetings);
 route.get('/authenticate', validToken); 
 route.get('/logout', logout); 
 route.post('/login', login); 
+route.post('/forgot-password', forgotPassword); 
+route.post('/reset-password', resetPassword); 
 route.post('/', registerUser);
 
 ///Protected routes

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Mail } from 'lucide-react'; // Importing Lucide icon
 import './ForgotPassword.css'; // Import the CSS file
+import axios from 'axios';
 
 const ForgotPassword = () => {
   const [email, setEmail] = useState('');
@@ -23,6 +24,8 @@ const ForgotPassword = () => {
 
     try {
       // Simulate API call
+      const res = await axios.post('/api/forgot-password', {email}, {withCredentials: true})
+      alert(res.data.message);
       console.log('Forgot password request submitted for email:', email);
       setMessage('Password reset instructions have been sent to your email.');
     } catch (err) {

@@ -52,7 +52,7 @@ const Login = () => {
       try {
         const res = await axios.post("/api/login", formData, { withCredentials: true });
         alert("Login successful!");
-        navigate(redirectPath, { replace:true });
+        navigate(redirectPath, { replace: true });
       } catch (err) {
         console.error(err?.response?.data?.error || err?.message);
         alert("Login failed: " + (err?.response?.data?.error || err?.message));
