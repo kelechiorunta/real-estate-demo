@@ -1,12 +1,15 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import axios from "axios";
 import "./Login.css"; // Import the CSS file
 import GoogleSignIn from "../GoogleSignIn/GoogleSignIn";
+import { dataContext } from "../UserContext/UserContext";
 
 const Login = () => {
   const navigate = useNavigate();
   const location = useLocation();
+  const Userdata = useContext(dataContext);
+  const { user, setUser } = Userdata
 
   const redirectPath = location.state?.from || location.state?.path || '/'
 
@@ -51,7 +54,9 @@ const Login = () => {
     if (validate()) {
       try {
         const res = await axios.post("/api/login", formData, { withCredentials: true });
+        setUser(res.data.user)
         alert("Login successful!");
+        setFormData({email:"", password:""})
         navigate(redirectPath, { replace: true });
       } catch (err) {
         console.error(err?.response?.data?.error || err?.message);

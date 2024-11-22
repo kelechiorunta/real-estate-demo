@@ -11,7 +11,7 @@ const Header = () => {
   // const user = location.state;
 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const user = useContext(dataContext);
+  const { user, setUser } = useContext(dataContext);
   console.log(user);
 
   const toggleMenu = () => {
@@ -22,6 +22,7 @@ const Header = () => {
     try{
       const res = await axios.get('/api/logout', {withCredentials: true});
       localStorage.removeItem('UserData');
+      setUser(null)
       navigate('/login');
       console.log(res.data.success)
     }
