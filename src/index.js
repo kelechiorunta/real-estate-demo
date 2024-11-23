@@ -11,7 +11,34 @@ const apis = require('./backend/routes/routes');
 const oauth = require('./backend/routes/oauth');
 const { checkToken } = require('./backend/middleware');
 const { connectDB } = require('./backend/mongodb');
+const { fork, spawn } = require('child_process');
+const subprocess = fork('./src/backend/child.js');
 require('dotenv').config();
+
+//Creates a new spawn child process of executing list directories
+const listDir = spawn('ls', ['-lh', '/usr']);
+
+  // Listen for stdout data and send child/subprocess messsage from data
+listDir.stdout.on('data', (data) => {
+    console.log(`stdout: ${data}`);
+    subprocess.send(data.toString());
+  });
+  
+  // Listen for stderr data (errors)
+  listDir.stderr.on('data', (data) => {
+    console.error(`stderr: ${data}`);
+  });
+  
+  // Listen for the process exit event
+  listDir.on('close', (code) => {
+    console.log(`Child process exited with code ${code}`);
+  });
+
+// Listen for messages from the child/subprocess process
+subprocess.on('message', (msg) => {
+    console.log(`Message from child: ${msg}`);
+  });
+
 
 //Connect to the database
 connectDB();
