@@ -21,13 +21,14 @@ function checkToken(req, res, next){
                 return res.status(403).json({ error: 'Invalid or Expired Token' }); // If token is invalid or expired
               }
             const activeUser = user?.id || user?.selectedUser || user?.registeredUser ;//await User.findOne({email: user?.id?.email});
+            console.log(activeUser);
             let isStored
             //Verify if user is in database
             const storedActiveUser = await User.findOne({email: activeUser.email});
             if (storedActiveUser) {
                 req.user = storedActiveUser;
                 if (!req.user.picture || req.user.picture===''){
-                    req.user.picture = activeUser?.picture;
+                    req.user.picture = activeUser?.picture ;
                     await req.user.save();
                 }
                 isStored = true

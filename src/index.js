@@ -75,7 +75,7 @@ app.use(express.json());
 // CORS setup
 const corsOptions = {
     origin: (origin, callback) => {
-        const allowedOrigins = [`http://${HOST}:${PORT}`, 'https://oauth2.googleapis.com/token'];
+        const allowedOrigins = [`http://${HOST}:${PORT}`, 'https://oauth2.googleapis.com/token', 'https://github.com',];
         if (allowedOrigins.indexOf(origin) !== -1 || !origin) {
             return callback(null, true);
         } else {

@@ -91,5 +91,45 @@ async function googleLogin(req, res) {
   }
 }
 
+async function githubLogin(req, res) {
+    const { code } = req.body;
+    console.log(code, "code")
 
-module.exports = { googleLogin };
+    try {
+        // Exchange code for access token
+        const response = await axios.post(
+            'https://github.com/login/oauth/access_token',
+            {
+                client_id: process.env.GITHUB_ID,
+                client_secret: process.env.GITHUB_SECRET,
+                client_redirect: process.env.REDIRECT_URI,
+                code,
+            },
+            {
+              withCredentials: true,
+                headers: {
+                    Accept: 'application/json',
+                },
+            }
+        );
+
+        const accessToken = response.data?.access_token;
+
+        // Fetch user details using access token
+        const userResponse = await axios.get('https://api.github.com/user', {
+          withCredentials: true,  
+          headers: {
+                Authorization: `Bearer ${accessToken}`,
+            },
+        });
+        // console.log(userResponse.data, "KELECHI")
+        createSendToken(userResponse.data, 200, req, res);
+        // res.json(userResponse.data);
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).send('Authentication failed');
+    }
+}
+
+
+module.exports = { googleLogin, githubLogin };

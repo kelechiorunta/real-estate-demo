@@ -10,6 +10,39 @@ const ProtectedRoute = () => {
     const { setUser } = useContext(dataContext);
 
     useEffect(() => {
+        // const queryString = window.location.search;
+        const urlParams = new URLSearchParams(window.location.search);
+        const code = urlParams.get('code');
+        if (code) {
+            // Exchange the code for user details
+            exchangeCodeForToken(code);
+        }
+    }, [window.location.search]);
+  
+    const exchangeCodeForToken = async (code) => {
+        try {
+            const res = await axios.post(
+                `/api/auth/github`,
+                { code },
+                { withCredentials: true, headers: { 'Content-Type': 'application/json' } }
+            );
+            
+            console.log('User Details:', res?.data?.user);
+            localStorage.setItem("UserData", JSON.stringify(res?.data?.user))
+            setUser(JSON.parse(localStorage.getItem('UserData')))
+            // Handle user authentication (e.g., save user info in state/context)
+            window.location.href='/home'
+            setIsAuthenticated(true);
+            // navigate('/'); // Redirect to your app's dashboard
+        } catch (err) {
+            console.error('GitHub Auth Error:', err);
+            setIsAuthenticated(false); // If verification fails, set to false
+            localStorage.removeItem('UserData'); // Removes any trace or instance of the current User Data in LocalStorage
+            setUser(null);
+        }
+    };
+
+    useEffect(() => {
         const verifyToken = async () => {
             try {
                 const res = await axios.get('/api/authenticate', { withCredentials: true });
