@@ -14,8 +14,8 @@ route.get('*', checkToken, (req, res, next)=>{
 //Sampling purpose: the getgreetings controller function
 //can only be authenticated by the checkToken middleware 
 //function passed to all get routes mounted on this router.
-route.get('/', getGreetings); 
 route.get('/authenticate', validToken); 
+route.get('/', getGreetings); 
 route.get('/logout', logout); 
 route.post('/login', login); 
 route.post('/forgot-password', forgotPassword); 

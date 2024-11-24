@@ -4,6 +4,7 @@ import axios from "axios";
 import "./Login.css"; // Import the CSS file
 import GoogleSignIn from "../GoogleSignIn/GoogleSignIn";
 import { dataContext } from "../UserContext/UserContext";
+import GitHubSignIn from "../GithubSignIn/GitHubSignIn";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -79,6 +80,7 @@ const Login = () => {
             name="email"
             value={formData.email}
             onChange={handleChange}
+            autoComplete="current-email"
           />
           {errors.email && <small className="error-message">{errors.email}</small>}
         </div>
@@ -90,6 +92,7 @@ const Login = () => {
             name="password"
             value={formData.password}
             onChange={handleChange}
+            autoComplete="current-password"
           />
           {errors.password && <small className="error-message">{errors.password}</small>}
         </div>
@@ -97,6 +100,8 @@ const Login = () => {
         
       </form>
         <GoogleSignIn />
+        <GitHubSignIn />
+       
         <div className='create'>
           <p className='create_account'><a href='/signup'>Need an Account</a></p>
           <p className='create_account'><a href='/forgot-password'>Forgot Password</a></p>

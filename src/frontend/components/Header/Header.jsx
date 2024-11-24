@@ -4,6 +4,7 @@ import { Link, useLocation, useNavigate } from 'react-router-dom'
 import "./Header.css"; // Import the CSS file for styles
 import { Home, Building, MapPin, Phone, Search } from "lucide-react";
 import { dataContext } from "../UserContext/UserContext";
+import GitHubSignIn from "../GithubSignIn/GitHubSignIn";
 
 const Header = () => {
   const navigate = useNavigate();
@@ -31,6 +32,10 @@ const Header = () => {
     }
   }  
 
+  // const githubOAuthURL = `https://github.com/login/oauth/authorize?client_id=${process.env.REACT_APP_GITHUB_ID}&redirect_uri=${process.env.REACT_APP_GITHUB_REDIRECT}&scope=read:user`;
+
+  
+
   // const user = JSON.parse(localStorage.getItem("UserData"));
   // console.log(user)
 
@@ -46,8 +51,9 @@ const Header = () => {
           <a href="#services">Services</a>
           <a href="/contact">Contact</a>
           {/* <img src={JSON.parse(localStorage.getItem("UserData")) && JSON.parse(localStorage.getItem("UserData")).picture} width={50} height={50} alt={''}/> */}
-          <img src={`${user && user.picture}`} width={50} height={50} alt={''}/>
+          <img src={`${user && user.picture || user?.avatar}`} width={50} height={50} alt={''}/>
         <button onClick={handlelogout}>Logout</button>
+        {/* <GitHubSignIn/> */}
       </nav>
       <button className="menu-toggle" onClick={toggleMenu}>
         ☰
