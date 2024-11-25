@@ -32,12 +32,58 @@ const Header = () => {
     }
   }  
 
-  // const githubOAuthURL = `https://github.com/login/oauth/authorize?client_id=${process.env.REACT_APP_GITHUB_ID}&redirect_uri=${process.env.REACT_APP_GITHUB_REDIRECT}&scope=read:user`;
+  const [loading, setLoading] = useState(null)
+  // const { code } = useParams();
+  const githubOAuthURL = `https://github.com/login/oauth/authorize?client_id=${process.env.REACT_APP_GITHUB_ID}&redirect_uri=${process.env.REACT_APP_GITHUB_REDIRECT}&scope=read:user`;
+  // const { setUser } = useContext(dataContext);
 
-  
+  useEffect(() => {
+      // setLoading(true)
+      // const queryString = window.location.search;
+      handleOAuth();
+      
+  }, [window.location.search, loading]);
 
-  // const user = JSON.parse(localStorage.getItem("UserData"));
-  // console.log(user)
+  const handleOAuth = () => {
+      // const githubOAuthURL = `https://github.com/login/oauth/authorize?client_id=${process.env.REACT_APP_GITHUB_ID}&redirect_uri=${process.env.REACT_APP_GITHUB_REDIRECT}&scope=read:user`;
+      // window.location.href = githubOAuthURL;
+      const urlParams = new URLSearchParams(window.location.search);
+      const code = urlParams.get('code');
+      if (code) {
+          // alert("Hello")
+          setLoading(true)
+      // Exchange the code for user details
+          exchangeCodeForToken(code);
+      }
+  }
+
+  const exchangeCodeForToken = async (code) => {
+      
+      try {
+          setLoading(true)
+          const res = await axios.post(
+              `/api/auth/github`,
+              { code },
+              { withCredentials: true, headers: { 'Content-Type': 'application/json' } }
+          );
+          
+          console.log('User Details:', res?.data?.user);
+          localStorage.setItem("UserData", JSON.stringify(res?.data?.user))
+          // Handle user authentication (e.g., save user info in state/context)
+          // alert("Hello")
+          setLoading(true)
+          setUser(JSON.parse(localStorage.getItem('UserData')))
+          window.location.href='/home'
+          
+          // navigate('/'); // Redirect to your app's dashboard
+      } catch (err) {
+          console.error('GitHub Auth Error:', err);
+      }
+      finally{
+          setLoading(true);
+      }
+  };
+
 
   return (
     <header className="header">
