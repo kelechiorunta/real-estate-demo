@@ -12,7 +12,12 @@ const connectDB = async() => {
     }
     catch(err){
         console.error(err.message)
-        process.exit(1)
+        process.on('exit', () => {
+            mongoose.connection.close(()=>{
+                process.exit(1);
+            })
+        })
+            
     }
 }
 
